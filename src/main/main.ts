@@ -16,7 +16,6 @@ import child_process from 'child_process';
 import fs from 'fs';
 import { resolveHtmlPath } from './util';
 import MenuBuilder from './menu';
-import fileiconContent from './fileicon';
 
 class AppUpdater {
   constructor() {
@@ -59,18 +58,18 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
+const RESOURCES_PATH = app.isPackaged
+  ? path.join(process.resourcesPath, 'assets')
+  : path.join(__dirname, '../../assets');
+
+const getAssetPath = (...paths: string[]): string => {
+  return path.join(RESOURCES_PATH, ...paths);
+};
+
 const createWindow = async () => {
   if (isDebug) {
     await installExtensions();
   }
-
-  const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../../assets');
-
-  const getAssetPath = (...paths: string[]): string => {
-    return path.join(RESOURCES_PATH, ...paths);
-  };
 
   mainWindow = new BrowserWindow({
     show: false,
@@ -149,12 +148,13 @@ if (!fs.existsSync(tempPath)) {
 }
 
 async function excuteFileiconScript(...args: string[]) {
-  const scriptPath = path.join(tempPath, 'fileicon.sh');
-  if (!fs.existsSync(scriptPath)) {
-    fs.writeFileSync(scriptPath, fileiconContent, {
-      mode: '777',
-    });
-  }
+  // const scriptPath = path.join(tempPath, 'fileicon.sh');
+  // if (!fs.existsSync(scriptPath)) {
+  //   fs.writeFileSync(scriptPath, fileiconContent, {
+  //     mode: '777',
+  //   });
+  // }
+  const scriptPath = getAssetPath('fileicon.sh');
   const script = child_process.spawn('bash', [scriptPath, ...args]);
   return new Promise((resolve, reject) => {
     script.stdout.on('data', (data) => {

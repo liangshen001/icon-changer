@@ -1,12 +1,12 @@
 {
   "name": "icon-changer",
-  "version": "1.0.0",
-  "description": "A foundation for scalable desktop apps",
+  "version": "1.0.1",
+  "description": "Mac Apps Icon Changer",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "Icon Changer",
+    "email": "850598163@qq.com",
+    "url": "https://github.com/liangshen001/icon-changer"
   },
   "main": "./dist/main/main.js",
   "scripts": {
